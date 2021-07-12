@@ -1,17 +1,21 @@
 package org.launchcode.javawebdevtechjobspersistent.models;
 
-import org.springframework.beans.factory.parsing.Location;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.lang.NonNull;
 
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Employer extends AbstractEntity {
 
-    @NotBlank(message="employer can have only one location")
+    @JoinColumn
+    @OneToMany
+    private final List<Job>jobs = new ArrayList<>();
+
+    @NotBlank(message="employer can only have one location")
     private String location;
 
     public Employer() {
@@ -23,6 +27,14 @@ public class Employer extends AbstractEntity {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public List<Job> getJobs() {
+        return jobs;
+    }
+
+    public void setJobs(List<Job>jobs) {
+        this.jobs.addAll(jobs);
     }
 
 }

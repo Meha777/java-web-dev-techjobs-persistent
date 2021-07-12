@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.Optional;
 
-@Controller
-@RequestMapping("Skills")
-public class SkillController {
+    @Controller
+    @RequestMapping("skills")
+    public class SkillController {
 
     @Autowired
     private SkillRepository skillRepository;
@@ -23,6 +23,7 @@ public class SkillController {
         model.addAttribute("skills",skillRepository.findAll());
         return "skills/index";
     }
+
     @GetMapping("add")
     public String displayAddSkillForm(Model model){
         model.addAttribute(new Skill());
@@ -40,16 +41,17 @@ public class SkillController {
 
     @GetMapping("view/{skillId}")
     public String viewSkillForm(Model model, @PathVariable int skillId){
-        Optional optSkill = null;
-        if(optSkill.isPresent()){
-            Skill skill = (Skill) optSkill.get();
-            model.addAttribute("skills",skillRepository.findById(skillId));
+        model.addAttribute("title", "View Skills");
+        model.addAttribute("skills",skillRepository.findById(skillId));
+        Optional<Skill> optSkill = skillRepository.findById(skillId);
+        if(optSkill.isPresent()) {
+            Skill skill = optSkill.get();
+            model.addAttribute("skills", skill);
+
+
             return "skills/view";
-        } else {
-            return "redirect:../";
         }
-
-
+        return "redirect:";
 
     }
 
