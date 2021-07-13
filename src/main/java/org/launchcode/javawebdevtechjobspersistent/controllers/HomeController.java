@@ -71,7 +71,7 @@ import java.util.Optional;
          model.addAttribute("job",job);
          return "view";
      }  else {
-         return "redirect:./";
+         return "redirect:";
      }
  }
 

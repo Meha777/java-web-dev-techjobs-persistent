@@ -40,19 +40,16 @@ import java.util.Optional;
     }
 
     @GetMapping("view/{skillId}")
-    public String viewSkillForm(Model model, @PathVariable int skillId){
-        model.addAttribute("title", "View Skills");
-        model.addAttribute("skills",skillRepository.findById(skillId));
-        Optional<Skill> optSkill = skillRepository.findById(skillId);
+    public String displayViewSkill(Model model, @PathVariable int skillId){
+
+        Optional optSkill = skillRepository.findById(skillId);
         if(optSkill.isPresent()) {
-            Skill skill = optSkill.get();
-            model.addAttribute("skills", skill);
-
-
+            Skill skill = (Skill) optSkill.get();
+            model.addAttribute("skill", skill);
             return "skills/view";
+        }else {
+            return "redirect:../";
         }
-        return "redirect:";
-
     }
 
 }
